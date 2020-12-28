@@ -77,28 +77,18 @@ class LoginViewController: UIViewController {
         passwordField.delegate = self
         
         // Add subviews
-        view.addSubview(scrollView)
-        scrollView.addSubview(imageView)
-        scrollView.addSubview(emailField)
-        scrollView.addSubview(passwordField)
-        scrollView.addSubview(loginButton)
+       addSubViews()
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        scrollView.frame = view.bounds
-        let size = scrollView.width/3
-        imageView.frame = CGRect(x: (scrollView.width - size)/2, y: 20, width: size, height: size)
-        emailField.frame = CGRect(x: 30, y: imageView.bottom + 10, width: scrollView.width - 60, height: 52)
-        passwordField.frame = CGRect(x: 30, y: emailField.bottom + 10, width: scrollView.width - 60, height: 52)
-        loginButton.frame = CGRect(x: 30, y: passwordField.bottom + 10, width: scrollView.width - 60, height: 52)
+        layoutSubViewOnScreen()
 
     }
     
     @objc private func loginButtonTapped(){
         // Get ride of the keyboard
-        emailField.resignFirstResponder()
-        passwordField.resignFirstResponder()
+        getRidOfKeyboard()
         
         guard let email = emailField.text, let password = passwordField.text,
               !email.isEmpty, !password.isEmpty, password.count >= 6 else{
@@ -106,12 +96,6 @@ class LoginViewController: UIViewController {
             return
         }
         // Firebase login
-    }
-    
-    func alertUserLoginError(){
-        let alert = UIAlertController(title: "Woops", message: "Please enter all information to login", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Dismiss", style: .cancel, handler: nil))
-        present(alert, animated: true)
     }
     
     @objc private func didTapRegister(){
@@ -129,5 +113,35 @@ extension LoginViewController: UITextFieldDelegate{
             loginButtonTapped()
         }
         return true
+    }
+}
+
+extension LoginViewController{
+    private func addSubViews(){
+        view.addSubview(scrollView)
+        scrollView.addSubview(imageView)
+        scrollView.addSubview(emailField)
+        scrollView.addSubview(passwordField)
+        scrollView.addSubview(loginButton)
+    }
+    
+    private func layoutSubViewOnScreen(){
+        scrollView.frame = view.bounds
+        let size = scrollView.width/3
+        imageView.frame = CGRect(x: (scrollView.width - size)/2, y: 20, width: size, height: size)
+        emailField.frame = CGRect(x: 30, y: imageView.bottom + 10, width: scrollView.width - 60, height: 52)
+        passwordField.frame = CGRect(x: 30, y: emailField.bottom + 10, width: scrollView.width - 60, height: 52)
+        loginButton.frame = CGRect(x: 30, y: passwordField.bottom + 10, width: scrollView.width - 60, height: 52)
+    }
+    
+    private func getRidOfKeyboard(){
+        emailField.resignFirstResponder()
+        passwordField.resignFirstResponder()
+    }
+    
+    func alertUserLoginError(){
+        let alert = UIAlertController(title: "Woops", message: "Please enter all information to login", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Dismiss", style: .cancel, handler: nil))
+        present(alert, animated: true)
     }
 }
