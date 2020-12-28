@@ -6,9 +6,10 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 class LoginViewController: UIViewController {
-    
+    // MARK: - UIView Components
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.clipsToBounds = true
@@ -63,7 +64,8 @@ class LoginViewController: UIViewController {
         button.titleLabel?.font = .systemFont(ofSize: 20, weight: .bold)
         return button
     }()
-
+    // MARK: - End of UIView Components
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Login"
@@ -96,6 +98,20 @@ class LoginViewController: UIViewController {
             return
         }
         // Firebase login
+        FirebaseAuth.Auth.auth().signIn(withEmail: email, password: password, completion: {
+            [weak self] authResult, error in
+            guard let strongSelf = self else{
+                return
+            }
+            guard let result = authResult, error == nil else{
+                print("Failed to log in user with email: \(email)")
+                return
+            }
+            
+            let user = result.user
+            print("Logged In User: \(user)")
+            strongSelf.navigationController?.dismiss(animated: true, completion: nil)
+        })
     }
     
     @objc private func didTapRegister(){
@@ -105,6 +121,7 @@ class LoginViewController: UIViewController {
     }
 }
 
+// MARK: - Textfield Delegation
 extension LoginViewController: UITextFieldDelegate{
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if textField == emailField{
@@ -116,6 +133,7 @@ extension LoginViewController: UITextFieldDelegate{
     }
 }
 
+// MARK: - Function tools
 extension LoginViewController{
     private func addSubViews(){
         view.addSubview(scrollView)

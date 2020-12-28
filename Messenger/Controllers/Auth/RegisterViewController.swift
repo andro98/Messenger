@@ -6,9 +6,10 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 class RegisterViewController: UIViewController {
-    
+    // MARK: - UIView Components
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.clipsToBounds = true
@@ -17,7 +18,7 @@ class RegisterViewController: UIViewController {
     
     private let imageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(systemName: "person")
+        imageView.image = UIImage(systemName: "person.circle")
         imageView.tintColor = .gray
         imageView.contentMode = .scaleAspectFit
         imageView.layer.masksToBounds = true
@@ -97,6 +98,7 @@ class RegisterViewController: UIViewController {
         button.titleLabel?.font = .systemFont(ofSize: 20, weight: .bold)
         return button
     }()
+    // MARK: -  End of UIView Components
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -131,7 +133,6 @@ class RegisterViewController: UIViewController {
     }
     
     @objc private func registerButtonTapped(){
-        // Get ride of the keyboard
         getRidOfKeyboard()
         guard
             let firstName = firstNameField.text,
@@ -146,7 +147,29 @@ class RegisterViewController: UIViewController {
             alertUserRegisterError()
             return
         }
-        // Firebase login
+        // Check User exits
+        DatabaseManager.shared.userExists(with: email, completion: {[weak self] exists in
+            guard let strongRef = self else{
+                return
+            }
+            guard !exists else{
+                strongRef.alertUserRegisterError(message: "Email already exist")
+                return
+            }
+            // Register new account
+            FirebaseAuth.Auth.auth().createUser(withEmail: email, password: password, completion: { authResult, error in
+                
+                guard authResult != nil,
+                      error == nil else{
+                    print("Error creating user")
+                    return
+                }
+                // Add user info to database
+                DatabaseManager.shared.insertUser(with: ChatAppUser(firstName: firstName, lastName: lastName, emailAddress: email))
+                
+                strongRef.navigationController?.dismiss(animated: true, completion: nil)
+            })
+        })
     }
     
     @objc private func didTapRegister(){
@@ -156,17 +179,7 @@ class RegisterViewController: UIViewController {
     }
 }
 
-extension RegisterViewController: UITextFieldDelegate{
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        if textField == emailField{
-            passwordField.becomeFirstResponder()
-        }else if textField == passwordField{
-            registerButtonTapped()
-        }
-        return true
-    }
-}
-
+// MARK: - Functions Tool
 extension RegisterViewController{
     private func addSubViews(){
         view.addSubview(scrollView)
@@ -197,14 +210,26 @@ extension RegisterViewController{
         passwordField.resignFirstResponder()
     }
     
-    private func alertUserRegisterError(){
-        let alert = UIAlertController(title: "Woops", message: "Please enter all information to create a new account.", preferredStyle: .alert)
+    private func alertUserRegisterError(message: String = "Please enter all information to create a new account."){
+        let alert = UIAlertController(title: "Woops", message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Dismiss", style: .cancel, handler: nil))
         present(alert, animated: true)
     }
 }
 
+// MARK: - TextField delegation
+extension RegisterViewController: UITextFieldDelegate{
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if textField == emailField{
+            passwordField.becomeFirstResponder()
+        }else if textField == passwordField{
+            registerButtonTapped()
+        }
+        return true
+    }
+}
 
+// MARK: - Image Picker login
 extension RegisterViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate{
     
     private func presentPhotoActionSheet(){
