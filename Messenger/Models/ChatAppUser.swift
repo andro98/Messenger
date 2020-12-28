@@ -16,7 +16,7 @@ struct ChatAppUser {
     /// Safe email is an email with no [".", "-"]
     var safeEmail: String{
         var safeEmail = emailAddress.replacingOccurrences(of: ".", with: "-")
-        safeEmail = emailAddress.replacingOccurrences(of: "@", with: "-")
+        safeEmail = safeEmail.replacingOccurrences(of: "@", with: "-")
         return safeEmail
     }
 }
