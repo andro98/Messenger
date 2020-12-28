@@ -7,9 +7,12 @@
 
 import UIKit
 import FirebaseAuth
+import JGProgressHUD
 
 class RegisterViewController: UIViewController {
     // MARK: - UIView Components
+    private let spinner = JGProgressHUD(style: .dark)
+
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.clipsToBounds = true
@@ -102,9 +105,9 @@ class RegisterViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Login"
-        view.backgroundColor = .white
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Register", style: .done, target: self, action: #selector(didTapRegister))
+//        title = "Register"
+        view.backgroundColor = .white 
+
         registerButton.addTarget(self, action: #selector(registerButtonTapped), for: .touchUpInside)
         
         emailField.delegate = self
@@ -148,10 +151,16 @@ class RegisterViewController: UIViewController {
             return
         }
         // Check User exits
+        spinner.show(in: view)
         DatabaseManager.shared.userExists(with: email, completion: {[weak self] exists in
             guard let strongRef = self else{
                 return
             }
+            
+            DispatchQueue.main.async {
+                strongRef.spinner.dismiss()
+            }
+            
             guard !exists else{
                 strongRef.alertUserRegisterError(message: "Email already exist")
                 return
@@ -170,12 +179,6 @@ class RegisterViewController: UIViewController {
                 strongRef.navigationController?.dismiss(animated: true, completion: nil)
             })
         })
-    }
-    
-    @objc private func didTapRegister(){
-        let vc = RegisterViewController()
-        vc.title = "Create Account"
-        navigationController?.pushViewController(vc, animated: true)
     }
 }
 

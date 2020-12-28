@@ -43,7 +43,7 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource{
         actionSheet.addAction(UIAlertAction(title: "Log Out", style: .destructive, handler: {
             [weak self] _ in
             
-            guard let strongRef = self else{
+            guard let strongRef = self else{ 
                 return
             }
             do{
