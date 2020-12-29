@@ -41,6 +41,17 @@ extension StorageManager{
             })
         })
     }
+    
+    public func getDownloadURL(for path: String, completion: @escaping (Result<URL, Error>) -> Void){
+        let refrence = storage.child(path)
+        refrence.downloadURL(completion: {url, error in
+            guard let url = url, error == nil else{
+                completion(.failure(StorageErrors.failedToGetDownloadUrl))
+                return
+            }
+            completion(.success(url))
+        })
+    }
 }
 
 // MARK: - Storage Error Enum

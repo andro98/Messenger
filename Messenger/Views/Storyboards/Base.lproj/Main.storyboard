@@ -85,7 +85,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="Profile" id="f5S-TO-s0h"/>
                     <connections>
-                        <outlet property="tableView" destination="7zc-gE-KyQ" id="aEN-KF-uUL"/>
+                        <outlet property="tableView" destination="7zc-gE-KyQ" id="4Sc-ZF-4kL"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="32Y-TK-P1B" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -95,7 +95,6 @@
         <!--Tab Bar Controller-->
         <scene sceneID="3bi-22-ZbN">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="9gX-rx-1co" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <tabBarController id="vcA-ZT-VaT" sceneMemberID="viewController">
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Jtc-fP-cQU">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="49"/>
@@ -107,6 +106,7 @@
                         <segue destination="fqQ-lD-z0m" kind="relationship" relationship="viewControllers" id="AZJ-Yj-8pU"/>
                     </connections>
                 </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="9gX-rx-1co" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1703" y="381"/>
         </scene>
