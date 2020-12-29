@@ -174,7 +174,26 @@ class RegisterViewController: UIViewController {
                     return
                 }
                 // Add user info to database
-                DatabaseManager.shared.insertUser(with: ChatAppUser(firstName: firstName, lastName: lastName, emailAddress: email))
+                let chatUser = ChatAppUser(firstName: firstName, lastName: lastName, emailAddress: email)
+                DatabaseManager.shared.insertUser(with: chatUser, completion: { success in
+                    // Upload profile image
+                    if success{
+                        guard let image = strongRef.imageView.image,
+                              let data = image.pngData()   else{
+                             return
+                        }
+                        let filename = chatUser.profilePictureFileName
+                        StorageManager.shared.uploadProfilePicture(with: data, fileName: filename, completion: {result in
+                            switch result{
+                            case .success(let downloadURL):
+                                UserDefaults.standard.set(downloadURL, forKey: "profile_picture_url")
+                                print(downloadURL)
+                            case .failure(let error):
+                                print("Storage manager error: \(error)")
+                            }
+                        })
+                    }
+                })
                 
                 strongRef.navigationController?.dismiss(animated: true, completion: nil)
             })
@@ -223,7 +242,11 @@ extension RegisterViewController{
 // MARK: - TextField delegation
 extension RegisterViewController: UITextFieldDelegate{
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        if textField == emailField{
+        if textField == firstNameField{
+            lastNameField.becomeFirstResponder()
+        }else if textField == lastNameField{
+            emailField.becomeFirstResponder()
+        }else if textField == emailField{
             passwordField.becomeFirstResponder()
         }else if textField == passwordField{
             registerButtonTapped()

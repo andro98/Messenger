@@ -33,8 +33,10 @@ class ConversationsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .compose, target: self, action: #selector(didTapComposeButton))
+        
         view.addSubview(tableView)
         view.addSubview(noConversationLabel)
+        
         setupTableView()
         fetchConversations()
     }

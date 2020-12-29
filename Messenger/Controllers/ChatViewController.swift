@@ -52,7 +52,4 @@ extension ChatViewController : MessagesDataSource, MessagesLayoutDelegate, Messa
     func numberOfSections(in messagesCollectionView: MessagesCollectionView) -> Int {
         return messages.count
     }
-    
-    
-    
 }

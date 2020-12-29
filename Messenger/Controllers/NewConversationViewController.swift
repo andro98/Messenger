@@ -8,7 +8,8 @@
 import UIKit
 
 class NewConversationViewController: UIViewController {
-
+    
+    // MARK: UIView Components
     private let searchBar: UISearchBar = {
         let searchBar = UISearchBar()
         searchBar.placeholder = "Search for Users..."
@@ -31,6 +32,7 @@ class NewConversationViewController: UIViewController {
         label.font = .systemFont(ofSize: 21, weight: .medium)
         return label
     }()
+    // MARK: End Of UIView Components
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,6 +47,7 @@ class NewConversationViewController: UIViewController {
     }
 }
 
+// MARK: - Search Bar Delegation
 extension NewConversationViewController: UISearchBarDelegate{
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         //

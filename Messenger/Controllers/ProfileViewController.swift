@@ -22,7 +22,7 @@ class ProfileViewController: UIViewController {
     }
 }
 
-
+// MARK: - Table view Delegation
 extension ProfileViewController: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return data.count
@@ -38,15 +38,22 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        
+        logout()
+    }
+}
+
+extension ProfileViewController{
+    /// Present action sheet to make sure user want to logout and if confirmed, he get logged out
+    private func logout(){
         let actionSheet = UIAlertController(title: "", message: "", preferredStyle: .actionSheet)
         actionSheet.addAction(UIAlertAction(title: "Log Out", style: .destructive, handler: {
             [weak self] _ in
             
-            guard let strongRef = self else{ 
+            guard let strongRef = self else{
                 return
             }
             do{
+                // Logging out
                 try FirebaseAuth.Auth.auth().signOut()
                 let vc = LoginViewController()
                 let nav = UINavigationController(rootViewController: vc)
@@ -58,6 +65,5 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource{
         }))
         actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler:  nil))
         present(actionSheet, animated: true)
-        
     }
 }

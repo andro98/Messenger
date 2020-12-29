@@ -92,7 +92,6 @@ class LoginViewController: UIViewController {
     }
     
     @objc private func loginButtonTapped(){
-        // Get ride of the keyboard
         getRidOfKeyboard()
         
         guard let email = emailField.text, let password = passwordField.text,
