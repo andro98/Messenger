@@ -42,6 +42,7 @@ extension StorageManager{
         })
     }
     
+    /// Get the download url for the profile image from the filename path
     public func getDownloadURL(for path: String, completion: @escaping (Result<URL, Error>) -> Void){
         let refrence = storage.child(path)
         refrence.downloadURL(completion: {url, error in
