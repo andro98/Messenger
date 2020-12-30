@@ -82,13 +82,13 @@ class LoginViewController: UIViewController {
         passwordField.delegate = self
         
         // Add subviews
-       addSubViews()
+        addSubViews()
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         layoutSubViewOnScreen()
-
+        
     }
     
     @objc private func loginButtonTapped(){
@@ -117,7 +117,27 @@ class LoginViewController: UIViewController {
             }
             
             let user = result.user
+            let safeEmail = DatabaseManager.getSafeEmail(from: email)
+            // Getting user data to cache his name
+            DatabaseManager.shared.getData(for: safeEmail){
+                result in
+                switch result{
+                case .success(let data):
+                    guard let userData = data as? [String: Any],
+                          let firstName = userData["first_name"] as? String,
+                          let lastName = userData["last_name"] as? String else {
+                        return
+                    }
+                    UserDefaults.standard.set("\(firstName ) \(lastName)", forKey: "name")
+                case .failure(let error):
+                    print("Failed to read dataa: \(error)")
+                }
+            }
+            
+            // Caching
             UserDefaults.standard.set(email, forKey: "email")
+            
+            
             print("Logged In User: \(user)")
             strongSelf.navigationController?.dismiss(animated: true, completion: nil)
         })

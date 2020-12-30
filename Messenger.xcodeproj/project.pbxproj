@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		264EAAB7259B309800546D2B /* StorgeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 264EAAB6259B309800546D2B /* StorgeManager.swift */; };
+		264EAABA259C5EF200546D2B /* ConversationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 264EAAB9259C5EF200546D2B /* ConversationTableViewCell.swift */; };
 		26853E2F2599CFD100E854B4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26853E2E2599CFD100E854B4 /* AppDelegate.swift */; };
 		26853E312599CFD100E854B4 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26853E302599CFD100E854B4 /* SceneDelegate.swift */; };
 		26853E332599CFD100E854B4 /* ConversationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26853E322599CFD100E854B4 /* ConversationsViewController.swift */; };
@@ -30,6 +31,7 @@
 
 /* Begin PBXFileReference section */
 		264EAAB6259B309800546D2B /* StorgeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorgeManager.swift; sourceTree = "<group>"; };
+		264EAAB9259C5EF200546D2B /* ConversationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationTableViewCell.swift; sourceTree = "<group>"; };
 		26853E2B2599CFD100E854B4 /* Messenger.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Messenger.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		26853E2E2599CFD100E854B4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		26853E302599CFD100E854B4 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -96,7 +98,6 @@
 			isa = PBXGroup;
 			children = (
 				26853E472599D16500E854B4 /* Resources */,
-				26853E462599D15000E854B4 /* ViewModels */,
 				26853E452599D14A00E854B4 /* Models */,
 				26853E442599D14000E854B4 /* Views */,
 				26853E432599D13A00E854B4 /* Controllers */,
@@ -116,6 +117,7 @@
 				26853E562599D30700E854B4 /* NewConversationViewController.swift */,
 				26853E592599D31300E854B4 /* ProfileViewController.swift */,
 				26853E96259A2A7D00E854B4 /* ChatViewController.swift */,
+				264EAAB9259C5EF200546D2B /* ConversationTableViewCell.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -135,13 +137,6 @@
 				26853E7D259A0D4E00E854B4 /* ChatAppUser.swift */,
 			);
 			path = Models;
-			sourceTree = "<group>";
-		};
-		26853E462599D15000E854B4 /* ViewModels */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = ViewModels;
 			sourceTree = "<group>";
 		};
 		26853E472599D16500E854B4 /* Resources */ = {
@@ -312,6 +307,7 @@
 				264EAAB7259B309800546D2B /* StorgeManager.swift in Sources */,
 				26853E312599CFD100E854B4 /* SceneDelegate.swift in Sources */,
 				26853E512599D2D600E854B4 /* PhotoViewerViewController.swift in Sources */,
+				264EAABA259C5EF200546D2B /* ConversationTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
